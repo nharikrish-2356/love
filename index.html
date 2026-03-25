@@ -47,7 +47,8 @@ button:hover {
     opacity: 0;
     transform: scale(0.5);
     transition: 1s;
-    text-shadow: 0 0 20px rgba(255,255,255,0.8);
+    text-shadow: 0 0 25px rgba(255,255,255,0.9);
+    text-align: center;
 }
 
 /* Show Animation */
@@ -74,21 +75,43 @@ button:hover {
         opacity: 0;
     }
 }
+
+/* Bottom Text */
+.footer {
+    position: fixed;
+    bottom: 10px;
+    right: 15px;
+    color: white;
+    font-size: 16px;
+    opacity: 0.8;
+    font-style: italic;
+}
 </style>
 
 </head>
 <body>
 
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+</audio>
+
 <div class="container">
     <button onclick="showLove()">Click Me ❤️</button>
-    <div id="love" class="love-text">I LOVE YOU 💖</div>
+    <div id="love" class="love-text">
+        I LOVE YOU 💖 <br>
+        HariRam 💑
+    </div>
 </div>
+
+<div class="footer">I am always waiting for you… 💌</div>
 
 <script>
 
-// Show Love Text
+// Show Love Text + Play Music
 function showLove() {
     document.getElementById("love").classList.add("show");
+    document.getElementById("bgMusic").play();
     createHearts();
 }
 
