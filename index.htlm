@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For You ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+}
+
+/* Center Box */
+.container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* Button */
+button {
+    padding: 15px 30px;
+    font-size: 20px;
+    border: none;
+    border-radius: 30px;
+    background: #ff4d6d;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #ff1e4d;
+    transform: scale(1.1);
+}
+
+/* Love Text */
+.love-text {
+    font-size: 60px;
+    color: white;
+    opacity: 0;
+    transform: scale(0.5);
+    transition: 1s;
+    text-shadow: 0 0 20px rgba(255,255,255,0.8);
+}
+
+/* Show Animation */
+.show {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* Hearts */
+.heart {
+    position: absolute;
+    color: red;
+    font-size: 20px;
+    animation: float 5s linear infinite;
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-800px);
+        opacity: 0;
+    }
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+    <button onclick="showLove()">Click Me ❤️</button>
+    <div id="love" class="love-text">I LOVE YOU 💖</div>
+</div>
+
+<script>
+
+// Show Love Text
+function showLove() {
+    document.getElementById("love").classList.add("show");
+    createHearts();
+}
+
+// Floating Hearts
+function createHearts() {
+    setInterval(() => {
+        let heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "💖";
+
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = Math.random() * 20 + 10 + "px";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 5000);
+    }, 300);
+}
+
+</script>
+
+</body>
+</html>
