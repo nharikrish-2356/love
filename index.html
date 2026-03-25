@@ -9,7 +9,7 @@
 body {
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #000000, #2b0a0a);
+    background: black;
     color: white;
     font-family: 'Segoe UI', sans-serif;
     overflow: hidden;
@@ -36,23 +36,10 @@ button {
     cursor: pointer;
 }
 
-/* Typing Text */
+/* Text */
 #text {
-    font-size: 45px;
+    font-size: 40px;
     margin-top: 20px;
-    min-height: 60px;
-}
-
-/* Name Animation */
-.name {
-    font-size: 50px;
-    color: #ff4d6d;
-    animation: glow 1.5s infinite alternate;
-}
-
-@keyframes glow {
-    from { text-shadow: 0 0 10px #ff4d6d; }
-    to { text-shadow: 0 0 30px #ff1e4d; }
 }
 
 /* Countdown */
@@ -64,7 +51,6 @@ button {
 /* Hearts */
 .heart {
     position: absolute;
-    color: red;
     animation: float 5s linear infinite;
 }
 
@@ -73,14 +59,24 @@ button {
     100% {transform: translateY(-800px); opacity: 0;}
 }
 
-/* Proposal Box */
-#proposal {
-    display: none;
+/* Fireworks */
+.spark {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: yellow;
+    border-radius: 50%;
+    animation: explode 1s ease-out forwards;
 }
 
-#noBtn {
-    position: absolute;
+@keyframes explode {
+    from { transform: translate(0,0); opacity:1; }
+    to { transform: translate(var(--x), var(--y)); opacity:0; }
 }
+
+/* Proposal */
+#proposal { display: none; }
+#noBtn { position: absolute; }
 
 /* Footer */
 .footer {
@@ -96,7 +92,7 @@ button {
 <body>
 
 <audio id="music" loop>
-    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3">
+<source src="https://www.bensound.com/bensound-music/bensound-love.mp3">
 </audio>
 
 <div class="container">
@@ -104,7 +100,6 @@ button {
 <button onclick="start()">Click My Heart ❤️</button>
 
 <div id="text"></div>
-
 <div id="countdown"></div>
 
 <div id="proposal">
@@ -119,16 +114,16 @@ button {
 
 <script>
 
-// 🔴 EDIT HER NAME HERE
-let herName = "Your Love ❤️"; // <-- CHANGE THIS
+// 👉 EDIT NAME HERE
+let herName = "Anjali ❤️";
 
-// Typing message
-let message = `Hey ${herName}...\nI have something special to tell you...\nI Love You ❤️\nHariRam 💑`;
+// Typing text
+let msg = `Hey ${herName}...\nI Love You ❤️\nHariRam 💑`;
 let i = 0;
 
 function type() {
-    if (i < message.length) {
-        document.getElementById("text").innerHTML += message.charAt(i);
+    if (i < msg.length) {
+        document.getElementById("text").innerHTML += msg.charAt(i);
         i++;
         setTimeout(type, 80);
     } else {
@@ -156,32 +151,64 @@ function hearts() {
     },300);
 }
 
-// Funny NO
+// Funny NO button
 function moveNo() {
     let btn = document.getElementById("noBtn");
     btn.style.top = Math.random()*80+"%";
     btn.style.left = Math.random()*80+"%";
 }
 
-// YES
+// YES + Fireworks 🎆
 function yes() {
     document.body.innerHTML = `
     <div style="display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;">
         <h1>She Said YES 💖😍</h1>
         <h2>Forever Starts Now 💍<br>HariRam 💑</h2>
     </div>`;
+
+    startFireworks();
+}
+
+// Fireworks
+function createFirework(x, y) {
+    for (let i = 0; i < 30; i++) {
+        let spark = document.createElement("div");
+        spark.className = "spark";
+
+        let angle = Math.random() * 2 * Math.PI;
+        let distance = Math.random() * 150;
+
+        spark.style.left = x + "px";
+        spark.style.top = y + "px";
+
+        spark.style.setProperty('--x', Math.cos(angle)*distance + "px");
+        spark.style.setProperty('--y', Math.sin(angle)*distance + "px");
+
+        document.body.appendChild(spark);
+
+        setTimeout(() => spark.remove(), 1000);
+    }
+}
+
+function startFireworks() {
+    setInterval(() => {
+        createFirework(
+            Math.random()*window.innerWidth,
+            Math.random()*window.innerHeight
+        );
+    }, 500);
 }
 
 // Countdown
 function countdown() {
     let target = new Date();
-    target.setMinutes(target.getMinutes() + 1); // 1 min demo
+    target.setMinutes(target.getMinutes() + 1);
 
     let interval = setInterval(() => {
         let now = new Date().getTime();
         let distance = target - now;
 
-        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+        let seconds = Math.floor((distance % (1000*60)) / 1000);
 
         document.getElementById("countdown").innerHTML =
         "Special moment in: " + seconds + "s ⏳";
