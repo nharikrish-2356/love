@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You ❤️</title>
+<title>My Proposal 💍</title>
 
 <style>
 body {
     margin: 0;
     padding: 0;
+    background: linear-gradient(135deg, #000000, #2b0a0a);
+    color: white;
     font-family: 'Segoe UI', sans-serif;
     overflow: hidden;
-    background: black;
-    color: white;
 }
 
 /* Center */
@@ -22,6 +22,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    text-align: center;
 }
 
 /* Button */
@@ -35,30 +36,29 @@ button {
     cursor: pointer;
 }
 
-/* Typing text */
+/* Typing Text */
 #text {
-    font-size: 40px;
-    text-align: center;
+    font-size: 45px;
     margin-top: 20px;
+    min-height: 60px;
 }
 
-/* Slideshow */
-.slideshow {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
+/* Name Animation */
+.name {
+    font-size: 50px;
+    color: #ff4d6d;
+    animation: glow 1.5s infinite alternate;
 }
-.slideshow img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: absolute;
-    opacity: 0;
-    transition: 2s;
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px #ff4d6d; }
+    to { text-shadow: 0 0 30px #ff1e4d; }
 }
-.active {
-    opacity: 0.4;
+
+/* Countdown */
+#countdown {
+    margin-top: 20px;
+    font-size: 25px;
 }
 
 /* Hearts */
@@ -67,16 +67,17 @@ button {
     color: red;
     animation: float 5s linear infinite;
 }
+
 @keyframes float {
     0% {transform: translateY(0); opacity: 1;}
     100% {transform: translateY(-800px); opacity: 0;}
 }
 
-/* Proposal */
+/* Proposal Box */
 #proposal {
     display: none;
-    text-align: center;
 }
+
 #noBtn {
     position: absolute;
 }
@@ -94,27 +95,21 @@ button {
 
 <body>
 
-<!-- MUSIC -->
 <audio id="music" loop>
     <source src="https://www.bensound.com/bensound-music/bensound-love.mp3">
 </audio>
 
-<!-- SLIDESHOW -->
-<div class="slideshow">
-    <img src="https://picsum.photos/800/600?random=1" class="active">
-    <img src="https://picsum.photos/800/600?random=2">
-    <img src="https://picsum.photos/800/600?random=3">
-</div>
-
 <div class="container">
 
-<button onclick="startLove()">Click Me ❤️</button>
+<button onclick="start()">Click My Heart ❤️</button>
 
 <div id="text"></div>
 
+<div id="countdown"></div>
+
 <div id="proposal">
-    <h2>Do you love me? 💖</h2>
-    <button onclick="yesLove()">Yes ❤️</button>
+    <h1>Will You Be Mine Forever? 💍</h1>
+    <button onclick="yes()">Yes 💖</button>
     <button id="noBtn" onmouseover="moveNo()">No 😜</button>
 </div>
 
@@ -124,68 +119,78 @@ button {
 
 <script>
 
-// Typing Effect
-let message = "I Love You ❤️\nHariRam 💑";
+// 🔴 EDIT HER NAME HERE
+let herName = "Your Love ❤️"; // <-- CHANGE THIS
+
+// Typing message
+let message = `Hey ${herName}...\nI have something special to tell you...\nI Love You ❤️\nHariRam 💑`;
 let i = 0;
 
-function typeEffect() {
+function type() {
     if (i < message.length) {
         document.getElementById("text").innerHTML += message.charAt(i);
         i++;
-        setTimeout(typeEffect, 100);
+        setTimeout(type, 80);
     } else {
         document.getElementById("proposal").style.display = "block";
     }
 }
 
-// Start everything
-function startLove() {
+// Start
+function start() {
     document.getElementById("music").play();
-    typeEffect();
-    createHearts();
-    startSlide();
+    type();
+    hearts();
+    countdown();
 }
 
 // Hearts
-function createHearts() {
+function hearts() {
     setInterval(() => {
-        let heart = document.createElement("div");
-        heart.classList.add("heart");
-        heart.innerHTML = "💖";
-        heart.style.left = Math.random() * 100 + "vw";
-        heart.style.fontSize = Math.random() * 20 + 10 + "px";
-        document.body.appendChild(heart);
-
-        setTimeout(() => heart.remove(), 5000);
-    }, 300);
+        let h = document.createElement("div");
+        h.className = "heart";
+        h.innerHTML = "💖";
+        h.style.left = Math.random()*100+"vw";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),5000);
+    },300);
 }
 
-// Slideshow
-let slides = document.querySelectorAll(".slideshow img");
-let index = 0;
-
-function startSlide() {
-    setInterval(() => {
-        slides[index].classList.remove("active");
-        index = (index + 1) % slides.length;
-        slides[index].classList.add("active");
-    }, 3000);
-}
-
-// Funny NO button
+// Funny NO
 function moveNo() {
     let btn = document.getElementById("noBtn");
-    btn.style.top = Math.random() * 80 + "%";
-    btn.style.left = Math.random() * 80 + "%";
+    btn.style.top = Math.random()*80+"%";
+    btn.style.left = Math.random()*80+"%";
 }
 
-// YES click
-function yesLove() {
+// YES
+function yes() {
     document.body.innerHTML = `
     <div style="display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;">
-        <h1>I Knew It 😍💖</h1>
-        <h2>Forever Yours ❤️<br>HariRam 💑</h2>
+        <h1>She Said YES 💖😍</h1>
+        <h2>Forever Starts Now 💍<br>HariRam 💑</h2>
     </div>`;
+}
+
+// Countdown
+function countdown() {
+    let target = new Date();
+    target.setMinutes(target.getMinutes() + 1); // 1 min demo
+
+    let interval = setInterval(() => {
+        let now = new Date().getTime();
+        let distance = target - now;
+
+        let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("countdown").innerHTML =
+        "Special moment in: " + seconds + "s ⏳";
+
+        if (distance < 0) {
+            clearInterval(interval);
+            document.getElementById("countdown").innerHTML = "Now ❤️";
+        }
+    }, 1000);
 }
 
 </script>
